@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 15:35:56 by ting              #+#    #+#             */
-/*   Updated: 2024/04/19 17:03:05 by ting             ###   ########.fr       */
+/*   Created: 2024/04/19 14:06:48 by ting              #+#    #+#             */
+/*   Updated: 2024/04/19 17:03:03 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	ft_error(char *str)
+int main(int argc, char **argv)
 {
-	printf("%s\n", str);
-	exit(1);
-}
+    u_int64_t   time;
 
-u_int64_t   get_time(void)
-{
-    struct timeval   time;
-
-    if (gettimeofday(&time, NULL) != 0)
-    {
-        ft_error("gettimeofday Error");
-    }
-    return((time.tv_sec * (u_int64_t)1000) + (time.tv_usec / 1000));
+    ft_checker(argc, argv);
+    time = get_time();
+    printf("%ld\n", time);
+	create_philos(argv);
 }

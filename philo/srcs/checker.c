@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:11:45 by ting              #+#    #+#             */
-/*   Updated: 2024/04/18 14:30:43 by ting             ###   ########.fr       */
+/*   Updated: 2024/04/19 17:03:04 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,29 @@ void	ft_argisdigit(char *arg)
 	}
 }
 
-int	ft_pos_atoi(char *str)
+long    ft_atol(const char *nptr)
 {
-	int	num;
-	int	i;
+        long    neg;
+        int             i;
+        long    num;
 
-	i = 0;
-	num = 0;
-	while (str[i] >= '0' && str[i] <= '9' && str[i] != '\0')
-	{
-		num = num * 10 + (str[i] - '0');
-		i++;
-	}
-	return (num);
+        i = 0;
+        neg = 1;
+        num = 0;
+        while (nptr[i] == 32 || (nptr[i] >= 9 && nptr[i] <= 13))
+                i++;
+        if (nptr[i] == '-' || nptr[i] == '+')
+        {
+                if (nptr[i] == '-')
+                        neg = neg * -1;
+                i++;
+        }
+        while (nptr[i] >= '0' && nptr[i] <= '9')
+        {
+                num = num * 10 + (nptr[i] - '0');
+                i++;
+        }
+        return (num * neg);
 }
 
 int	ft_checker(int argc, char **argv)
@@ -67,13 +77,13 @@ int	ft_checker(int argc, char **argv)
 			ft_argisdigit(argv[i]);
 			i++;
 		}
-		if (ft_pos_atoi(argv[1]) > 200)
+		if (ft_atol(argv[1]) > 200)
 			ft_args_error(ARG_ERROR_2);
-		if (ft_pos_atoi(argv[1]) <= 0 || ft_pos_atoi(argv[2]) <= 0
-			|| ft_pos_atoi(argv[3]) <= 0 || ft_pos_atoi(argv[4]) <= 0)
+		if (ft_atol(argv[1]) <= 0 || ft_atol(argv[2]) <= 0
+			|| ft_atol(argv[3]) <= 0 || ft_atol(argv[4]) <= 0)
 			ft_args_error(ARG_ERROR_1);
 		if (argv[5])
-			if (ft_pos_atoi(argv[5]) <= 0)
+			if (ft_atol(argv[5]) <= 0)
 				ft_args_error(ARG_ERROR_1);
 	}
 	else

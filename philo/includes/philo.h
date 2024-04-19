@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:23:37 by ting              #+#    #+#             */
-/*   Updated: 2024/04/18 17:39:03 by ting             ###   ########.fr       */
+/*   Updated: 2024/04/19 17:03:00 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@
 # include <stdlib.h>
 # include <stdint.h>
 # include <sys/time.h>
-
-// define colours
-# define RET "\033[0m"
-# define R "\033[1;31m"
+# include <pthread.h>
 
 // checker input error msg
 # define ARG_ERROR_1 "Error: Argument is not digit / less than 1"
@@ -29,11 +26,15 @@
 
 // checker.c
 void	ft_argisdigit(char *arg);
-int		ft_pos_atoi(char *str);
+long    ft_atol(const char *nptr);
 int		ft_checker(int argc, char **argv);
 
 //utils.c
 void	ft_error(char *str);
 u_int64_t   get_time(void);
+
+//philo.c
+void	*thread_function(void *arg);
+void	create_philos(char **argv);
 
 #endif
