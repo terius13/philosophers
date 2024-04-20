@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:23:37 by ting              #+#    #+#             */
-/*   Updated: 2024/04/20 00:00:11 by ting             ###   ########.fr       */
+/*   Updated: 2024/04/20 15:26:46 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,14 @@
 # include <pthread.h>
 
 // checker input error msg
-# define ARG_ERROR_1 "Error: Argument is not digit / less than 1"
-# define ARG_ERROR_2 "Error: Number of Philosopher exceeds 200"
-# define ARG_ERROR_3 "Error: Incorrect number of arguments"
+# define ARG_ERROR_1 R "Error: Argument is not digit / less than 1" RST
+# define ARG_ERROR_2 R "Error: Number of Philosopher exceeds 200" RST
+# define ARG_ERROR_3 R "Error: Incorrect number of arguments" RST
+
+# define RST "\033[0m"
+# define R "\033[1;31m"
+# define G "\033[32m"
+# define B "\033[34m"
 
 typedef struct	s_table
 {
@@ -43,7 +48,7 @@ int		ft_checker(int argc, char **argv);
 
 //utils.c
 void	ft_error(char *str);
-u_int64_t   get_time(void);
+long   get_time(void);
 
 //philo.c
 void	*thread_function(void *arg);

@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:23:51 by ting              #+#    #+#             */
-/*   Updated: 2024/04/20 00:00:11 by ting             ###   ########.fr       */
+/*   Updated: 2024/04/20 13:42:12 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*thread_function(void *arg)
 	int	id;
 
 	id = *((int *) arg);
-	printf("philo thread %i is running\n", id);
+	printf(B "philo thread %i is running\n" RST, id);
 	return (NULL);
 }
 
@@ -37,11 +37,11 @@ void	create_philos(char **argv) //maybe i can do a pthread_t * , to return the a
 	result = 0;
 	while (i <= ft_atol(argv[1])) //might need to change to <=
 	{
-		philo_id[i] = i;
-		result = pthread_create(&philo[j], NULL, thread_function, (void *)&philo_id[i]);
+		philo_id[j] = i;
+		result = pthread_create(&philo[j], NULL, thread_function, (void *)&philo_id[j]);
 		if (result != 0)
 		{
-			printf("Error creating threads %d\n" , i);
+			printf(R "Error creating threads %d\n" RST, i);
 		}
 		i++;
 		j++;
@@ -51,7 +51,7 @@ void	create_philos(char **argv) //maybe i can do a pthread_t * , to return the a
 	while (i <= ft_atol(argv[1]))
 	{
 		pthread_join(philo[j], NULL);
-		printf("philo thread %d joined\n", philo_id[i]);
+		printf(G "philo thread %d joined\n" RST, philo_id[j]);
 		i++;
 		j++;
 	}

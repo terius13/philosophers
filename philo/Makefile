@@ -6,13 +6,13 @@
 #    By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/17 14:22:30 by ting              #+#    #+#              #
-#    Updated: 2024/04/20 00:00:18 by ting             ###   ########.fr        #
+#    Updated: 2024/04/20 16:06:39 by ting             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-FLAGS = -Wall -Werror -Wextra -g -pthread
+FLAGS = -Wall -Werror -Wextra -g -pthread -fsanitize=address
 
 SRCS = srcs/philo.c srcs/checker.c \
 		srcs/utils.c srcs/main.c \
