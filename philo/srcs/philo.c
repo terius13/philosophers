@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:23:51 by ting              #+#    #+#             */
-/*   Updated: 2024/04/25 15:10:43 by ting             ###   ########.fr       */
+/*   Updated: 2024/04/25 21:31:51 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,25 @@ void	*thread_function(void *arg)
 	return (NULL);
 }
 
-void	init_input(int argc, char **argv)
+void	init_input(t_table *table, int argc, char **argv)
 {
-	t_table	*table;
-	int	i;
+	//int	i;
 
-	i = 0;
+	//i = 0;
 	ft_checker(argc, argv);
-	table.num_of_philos
+	table->num_of_philos = ft_atol(argv[1]);
+	table->time_to_die = ft_atol(argv[2]);
+	table->time_to_eat = ft_atol(argv[3]);
+	table->time_to_sleep = ft_atol(argv[4]);
+	if (argv[5])
+		table->num_of_meals = ft_atol(argv[5]);
 }
-
+/*
+//create a new function but using the struct
 void	create_philos()
 {
-
 }
-
+*/
 /*
 void	create_philos(char **argv) //maybe i can do a pthread_t * , to return the array of threads, assign to my table struct
 {

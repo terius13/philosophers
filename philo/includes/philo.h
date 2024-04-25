@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:23:37 by ting              #+#    #+#             */
-/*   Updated: 2024/04/25 15:10:44 by ting             ###   ########.fr       */
+/*   Updated: 2024/04/25 21:31:53 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 typedef struct	s_philo
 {
 	int	id;
+	int	meal_count;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t *l_fork;
 }				t_philo;
@@ -40,8 +41,8 @@ typedef struct	s_philo
 typedef struct	s_table
 {
 	long	num_of_philos;
-	long	time_to_eat;
 	long	time_to_die;
+	long	time_to_eat;
 	long	time_to_sleep;
 	long	num_of_meals;
 	long	start_time;
@@ -60,7 +61,8 @@ void	ft_error(char *str);
 long   get_time(void);
 
 //philo.c
+void	init_input(t_table *table, int argc, char **argv);
 void	*thread_function(void *arg);
-void	create_philos(char **argv);
+//void	create_philos(char **argv);
 
 #endif

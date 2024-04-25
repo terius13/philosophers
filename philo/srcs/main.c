@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:06:48 by ting              #+#    #+#             */
-/*   Updated: 2024/04/25 15:10:45 by ting             ###   ########.fr       */
+/*   Updated: 2024/04/25 21:28:46 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 int main(int argc, char **argv)
 {
+    t_table table;
     long   time;
 
-    ft_checker(argc, argv);
+    init_input(&table, argc, argv);
     time = get_time();
     printf("%ld\n", time);
-	create_philos(argv);
+	//create_philos(argv);
 }
