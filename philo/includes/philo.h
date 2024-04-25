@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:23:37 by ting              #+#    #+#             */
-/*   Updated: 2024/04/20 15:26:46 by ting             ###   ########.fr       */
+/*   Updated: 2024/04/25 15:10:44 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@
 # define G "\033[32m"
 # define B "\033[34m"
 
+typedef struct	s_philo
+{
+	int	id;
+	pthread_mutex_t	*r_fork;
+	pthread_mutex_t *l_fork;
+}				t_philo;
+
 typedef struct	s_table
 {
 	long	num_of_philos;
@@ -39,6 +46,8 @@ typedef struct	s_table
 	long	num_of_meals;
 	long	start_time;
 	bool	end_simulation;
+	t_philo	*philos;
+	pthread_mutex_t	*forks;
 }				t_table;
 
 // checker.c
