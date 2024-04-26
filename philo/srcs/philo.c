@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:23:51 by ting              #+#    #+#             */
-/*   Updated: 2024/04/26 18:15:50 by ting             ###   ########.fr       */
+/*   Updated: 2024/04/26 18:58:03 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,29 @@ void	init_input(t_table *table, int argc, char **argv)
 	table->time_to_sleep = ft_atol(argv[4]);
 	if (argv[5])
 		table->num_of_meals = ft_atol(argv[5]);
+	table->philos = (t_philo *)malloc(sizeof(t_philo) * table->num_of_philos);
 }
 
-void	init_philos(t_table *table)
+void	init_philo(t_table *table)
+{
+	int	i;
+
+	i = 0;
+	while (i < table->num_of_philos)
+	{
+		//might need to change this
+		table->philos[i].r_fork = table->philos[i].id;
+		table->philos[i].l_fork = (table->philos[i].id + 1) % table->num_of_philos;
+		i++;
+	}
+}
+
+void	create_philos(t_table *table)
 {
 	int	i;
 	t_philo	*philo;
 
 	i = 0;
-	table->philos = (t_philo *)malloc(sizeof(t_philo) * table->num_of_philos);
 	philo = table->philos;
 	while (i < table->num_of_philos)
 	{
