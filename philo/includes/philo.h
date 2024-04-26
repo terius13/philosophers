@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:23:37 by ting              #+#    #+#             */
-/*   Updated: 2024/04/25 21:31:53 by ting             ###   ########.fr       */
+/*   Updated: 2024/04/26 18:15:54 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # define ARG_ERROR_2 R "Error: Number of Philosopher exceeds 200" RST
 # define ARG_ERROR_3 R "Error: Incorrect number of arguments" RST
 
+# define PTHREAD_ERR_1 R "Error creating threads" RST
+
 # define RST "\033[0m"
 # define R "\033[1;31m"
 # define G "\033[32m"
@@ -32,6 +34,7 @@
 
 typedef struct	s_philo
 {
+	pthread_t	thread_id;
 	int	id;
 	int	meal_count;
 	pthread_mutex_t	*r_fork;
@@ -57,12 +60,12 @@ long    ft_atol(const char *nptr);
 int		ft_checker(int argc, char **argv);
 
 //utils.c
-void	ft_error(char *str);
+void	error_exit(char *str);
 long   get_time(void);
 
 //philo.c
 void	init_input(t_table *table, int argc, char **argv);
 void	*thread_function(void *arg);
-//void	create_philos(char **argv);
+void	init_philos(t_table *table);
 
 #endif

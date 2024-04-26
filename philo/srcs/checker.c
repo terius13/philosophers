@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:11:45 by ting              #+#    #+#             */
-/*   Updated: 2024/04/25 21:31:52 by ting             ###   ########.fr       */
+/*   Updated: 2024/04/26 18:15:51 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 // 250 — The time it takes a philosopher to sleep (more than 0)
 // 7 — Number of times all the philosophers need to eat before terminating the program (optional)
 
-void	ft_args_error(char *str)
+void	error_exit(char *str)
 {
 	printf("%s\n", str);
 	exit(1);
@@ -35,7 +35,7 @@ void	ft_argisdigit(char *arg)
 	while (arg[i])
 	{
 		if (arg[i] < '0' || arg[i] > '9')
-			ft_args_error(ARG_ERROR_1);
+			error_exit(ARG_ERROR_1);
 		i++;
 	}
 }
@@ -78,15 +78,14 @@ int	ft_checker(int argc, char **argv)
 			i++;
 		}
 		if (ft_atol(argv[1]) > 200)
-			ft_args_error(ARG_ERROR_2);
+			error_exit(ARG_ERROR_2);
 		if (ft_atol(argv[1]) <= 0 || ft_atol(argv[2]) <= 0
 			|| ft_atol(argv[3]) <= 0 || ft_atol(argv[4]) <= 0)
-			ft_args_error(ARG_ERROR_1);
+			error_exit(ARG_ERROR_1);
 		if (argv[5])
 			if (ft_atol(argv[5]) <= 0)
-				ft_args_error(ARG_ERROR_1);
+				error_exit(ARG_ERROR_1);
 	}
-	else
-		ft_args_error(ARG_ERROR_3);
+	else			error_exit(ARG_ERROR_3);
 	return (0);
 }
