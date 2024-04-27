@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -27,7 +28,7 @@ void	error_exit(char *str)
 	exit(1);
 }
 
-void	ft_argisdigit(char *arg)
+int	ft_argisdigit(char *arg)
 {
 	int	i;
 
@@ -35,9 +36,10 @@ void	ft_argisdigit(char *arg)
 	while (arg[i])
 	{
 		if (arg[i] < '0' || arg[i] > '9')
-			error_exit(ARG_ERROR_1);
+			return (1);
 		i++;
 	}
+	return (0);
 }
 
 long    ft_atol(const char *nptr)
@@ -74,18 +76,20 @@ int	ft_checker(int argc, char **argv)
 	{
 		while (i < argc)
 		{
-			ft_argisdigit(argv[i]);
+			if (ft_argisdigit(argv[i]) == 1)
+				return (write(2, "Argument is not digit / less than 1\n", 37), 1);
 			i++;
 		}
 		if (ft_atol(argv[1]) > 200)
-			error_exit(ARG_ERROR_2);
+			return (write(2, "Philo count exceeds 200\n", 25), 1);
 		if (ft_atol(argv[1]) <= 0 || ft_atol(argv[2]) <= 0
 			|| ft_atol(argv[3]) <= 0 || ft_atol(argv[4]) <= 0)
-			error_exit(ARG_ERROR_1);
+			return (write(2, "Argument is less than 1\n", 25), 1);
 		if (argv[5])
 			if (ft_atol(argv[5]) <= 0)
-				error_exit(ARG_ERROR_1);
+				return (write(2, "Argument is less than 1\n", 25), 1);
 	}
-	else			error_exit(ARG_ERROR_3);
+	else			
+		return (write(2, "Incorrect number of arguments\n", 31), 1);
 	return (0);
 }

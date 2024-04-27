@@ -6,26 +6,20 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:23:37 by ting              #+#    #+#             */
-/*   Updated: 2024/04/26 18:48:10 by ting             ###   ########.fr       */
+/*   Updated: 2024/04/27 23:02:07 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+# include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <stdint.h>
 # include <stdbool.h>
 # include <sys/time.h>
 # include <pthread.h>
-
-// checker input error msg
-# define ARG_ERROR_1 R "Error: Argument is not digit / less than 1" RST
-# define ARG_ERROR_2 R "Error: Number of Philosopher exceeds 200" RST
-# define ARG_ERROR_3 R "Error: Incorrect number of arguments" RST
-
-# define PTHREAD_ERR_1 R "Error creating threads" RST
 
 # define RST "\033[0m"
 # define R "\033[1;31m"
@@ -39,6 +33,7 @@ typedef struct	s_philo
 	int	meal_count;
 	pthread_mutex_t	*r_fork; //might need to change to int depending on how i want to handle this
 	pthread_mutex_t *l_fork; //this is for l_fork[i]
+	struct s_table	*table;
 }				t_philo;
 
 typedef struct	s_table
@@ -55,17 +50,18 @@ typedef struct	s_table
 }				t_table;
 
 // checker.c
-void	ft_argisdigit(char *arg);
+int	ft_argisdigit(char *arg);
 long    ft_atol(const char *nptr);
 int		ft_checker(int argc, char **argv);
 
 //utils.c
 void	error_exit(char *str);
 long   get_time(void);
+void	ft_usleep(long ms);
 
 //philo.c
-void	init_input(t_table *table, int argc, char **argv);
-void	*thread_function(void *arg);
-void	create_philos(t_table *table);
+void	*do_routine(void *philo_pointer);
+int	init_input(t_table *table, int argc, char **argv);
+int	create_philos(t_table *table);
 
 #endif
