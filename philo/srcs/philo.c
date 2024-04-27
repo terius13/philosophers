@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:23:51 by ting              #+#    #+#             */
-/*   Updated: 2024/04/26 18:58:03 by ting             ###   ########.fr       */
+/*   Updated: 2024/04/27 12:42:29 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	init_input(t_table *table, int argc, char **argv)
 		table->num_of_meals = ft_atol(argv[5]);
 	table->philos = (t_philo *)malloc(sizeof(t_philo) * table->num_of_philos);
 }
-
+/*
 void	init_philo(t_table *table)
 {
 	int	i;
@@ -49,7 +49,7 @@ void	init_philo(t_table *table)
 		i++;
 	}
 }
-
+*/
 void	create_philos(t_table *table)
 {
 	int	i;
