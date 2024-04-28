@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:23:37 by ting              #+#    #+#             */
-/*   Updated: 2024/04/27 23:02:07 by ting             ###   ########.fr       */
+/*   Updated: 2024/04/28 21:30:38 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,18 @@
 # define R "\033[1;31m"
 # define G "\033[32m"
 # define B "\033[34m"
+# define Y "\033[33m"
+# define C "\033[36m"
+# define M "\033[35m"
 
 typedef struct	s_philo
 {
 	pthread_t	thread_id;
 	int	id;
 	int	meal_count;
-	pthread_mutex_t	*r_fork; //might need to change to int depending on how i want to handle this
+	pthread_mutex_t	*r_fork;
 	pthread_mutex_t *l_fork; //this is for l_fork[i]
+	pthread_mutex_t	eat_lock;
 	struct s_table	*table;
 }				t_philo;
 
@@ -47,7 +51,14 @@ typedef struct	s_table
 	bool	end_simulation;
 	t_philo	*philos;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	message_lock;
 }				t_table;
+
+//init.c
+int	init_input(t_table *table, int argc, char **argv);
+void	init_forks(t_table *table);
+void	init_philo(t_table *table);
+int	init_all(t_table *table, int argc, char **argv);
 
 // checker.c
 int	ft_argisdigit(char *arg);
@@ -55,13 +66,11 @@ long    ft_atol(const char *nptr);
 int		ft_checker(int argc, char **argv);
 
 //utils.c
-void	error_exit(char *str);
 long   get_time(void);
 void	ft_usleep(long ms);
 
 //philo.c
 void	*do_routine(void *philo_pointer);
-int	init_input(t_table *table, int argc, char **argv);
 int	create_philos(t_table *table);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:06:48 by ting              #+#    #+#             */
-/*   Updated: 2024/04/27 17:03:28 by ting             ###   ########.fr       */
+/*   Updated: 2024/04/28 21:15:01 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int main(int argc, char **argv)
     t_table table;
     long   time;
 
-    if (init_input(&table, argc, argv) == 1)
+    if (init_all(&table, argc, argv) == 1)
         return (1);
     time = get_time();
     printf("%ld\n", time);

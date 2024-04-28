@@ -14,7 +14,7 @@
 #include "../includes/philo.h"
 
 // the checker should check the input to make sure that it is all numerical
-//[number_of_philosophers] [time_to_die time_to_eat] [time_to_sleep] [number_of_times_each_philosopher_must_eat(optional)]
+//[number_of_philosophers] [time_to_die] [time_to_eat] [time_to_sleep] [number_of_times_each_philosopher_must_eat(optional)]
 // 5 800 200 250 7
 // 5 — The number of philosophers (not more than 200)
 // 800 — The time a philosopher will die if he doesn’t eat (more than 0)

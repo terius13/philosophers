@@ -6,17 +6,11 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:35:56 by ting              #+#    #+#             */
-/*   Updated: 2024/04/27 18:49:13 by ting             ###   ########.fr       */
+/*   Updated: 2024/04/28 21:30:39 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-
-void	ft_error(char *str)
-{
-	printf("%s\n", str);
-	exit(1);
-}
 
 long   get_time(void)
 {
