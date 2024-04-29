@@ -72,7 +72,7 @@ int	ft_checker(int argc, char **argv)
 	int	i;
 
 	i = 1;
-	if (argc == 5 || argc == 6)
+	if (argc == 5 || argc == 6) 
 	{
 		while (i < argc)
 		{
