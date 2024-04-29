@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:23:37 by ting              #+#    #+#             */
-/*   Updated: 2024/04/28 21:30:38 by ting             ###   ########.fr       */
+/*   Updated: 2024/04/29 19:22:23 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int		ft_checker(int argc, char **argv);
 //utils.c
 long   get_time(void);
 void	ft_usleep(long ms);
+void	free_all(t_table *table);
 
 //philo.c
 void	*do_routine(void *philo_pointer);

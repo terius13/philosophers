@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:06:48 by ting              #+#    #+#             */
-/*   Updated: 2024/04/28 21:15:01 by ting             ###   ########.fr       */
+/*   Updated: 2024/04/29 19:22:24 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,5 @@ int main(int argc, char **argv)
     printf("%ld\n", time);
 	if (create_philos(&table) == 1)
         return (1);
+    free_all(&table);
 }

@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:23:51 by ting              #+#    #+#             */
-/*   Updated: 2024/04/28 21:37:21 by ting             ###   ########.fr       */
+/*   Updated: 2024/04/29 19:22:22 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,11 @@ void	sleeping(t_philo philo)
 
 void	eating(t_philo philo)
 {
-	pthread_mutex_lock(&philo.eat_lock);
 	pthread_mutex_lock(philo.r_fork);
 	message(&philo, 4);
 	pthread_mutex_lock(philo.l_fork);
 	message(&philo, 5);
-	//pthread_mutex_lock(&philo.eat_lock);
+	pthread_mutex_lock(&philo.eat_lock);
 	message(&philo, 1);
 	ft_usleep(philo.table->time_to_eat);
 	message(&philo, 6);
