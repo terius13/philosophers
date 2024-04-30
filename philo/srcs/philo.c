@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:23:51 by ting              #+#    #+#             */
-/*   Updated: 2024/04/29 19:22:22 by ting             ###   ########.fr       */
+/*   Updated: 2024/04/30 22:05:19 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,58 +38,87 @@ void	message(t_philo *philo, int type)
 	pthread_mutex_unlock(&philo->table->message_lock);
 }
 
-void	thinking(t_philo philo)
+void	thinking(t_philo *philo)
 {
-	message(&philo, 2);
+	message(philo, 2);
 }
 
-void	sleeping(t_philo philo)
+void	sleeping(t_philo *philo)
 {
-	message(&philo, 3);
-	ft_usleep(philo.table->time_to_sleep);
+	message(philo, 3);
+	ft_usleep(philo->table->time_to_sleep);
 }
 
-void	eating(t_philo philo)
+void	eating(t_philo *philo)
 {
-	pthread_mutex_lock(philo.r_fork);
-	message(&philo, 4);
-	pthread_mutex_lock(philo.l_fork);
-	message(&philo, 5);
-	pthread_mutex_lock(&philo.eat_lock);
-	message(&philo, 1);
-	ft_usleep(philo.table->time_to_eat);
-	message(&philo, 6);
-	pthread_mutex_unlock(philo.r_fork);
-	message(&philo, 7);
-	pthread_mutex_unlock(philo.l_fork);
-	pthread_mutex_unlock(&philo.eat_lock);
+	pthread_mutex_lock(&philo->eat_lock);
+	if (philo->id % 2 == 0)
+	{
+		pthread_mutex_lock(philo->l_fork);
+		message(philo, 5);
+		pthread_mutex_lock(philo->r_fork);
+		message(philo, 4);
+	}
+	else
+	{
+		pthread_mutex_lock(philo->r_fork);
+		message(philo, 4);
+		pthread_mutex_lock(philo->l_fork);
+		message(philo, 5);
+	}
+//	pthread_mutex_lock(&philo->eat_lock);
+//	pthread_mutex_lock(philo->r_fork);
+//	message(philo, 4);
+//	pthread_mutex_lock(philo->l_fork);
+//	message(philo, 5);
+	message(philo, 1);
+	philo->meal_count++;
+	pthread_mutex_unlock(&philo->eat_lock);
+	ft_usleep(philo->table->time_to_eat);
+	message(philo, 7);
+	pthread_mutex_unlock(philo->l_fork);
+	message(philo, 6);
+	pthread_mutex_unlock(philo->r_fork);
 }
 
 void	*do_routine(void *philo_pointer)
 {
-	t_philo	philo;
+	t_philo	*philo;
 
-	philo = *((t_philo *) philo_pointer);
-	printf("philo thread %i is running\n", philo.id);
-	thinking(philo);
-	eating(philo);
-	sleeping(philo);
+	philo = (t_philo *) philo_pointer;
+	printf("philo thread %i is running\n", philo->id);
+	/*
+	if (philo.id % 2 == 0)
+		{
+			ft_usleep(1);
+		}
+	*/
+	while (philo->table->end_simulation == 0) 
+	{
+		thinking(philo);
+		eating(philo);
+		sleeping(philo);
+	}
 	return (NULL);
 }
 
-int	create_philos(t_table *table)
+int	create_philos_and_join(t_table *table)
 {
 	int	i;
+	pthread_t	monitor_t;
 	t_philo	*philo;
 
 	i = 0;
 	philo = table->philos;
 	table->start_time = get_time();
+	
+	if (pthread_create(&monitor_t, NULL, &monitor, (void *)table) != 0)
+		return (write(2, "Error creating thread\n", 22), 1);
 	while (i < table->num_of_philos)
 	{
 		philo[i].id = i + 1;
 		philo[i].table = table;
-		if (pthread_create(&(philo[i].thread_id), NULL, do_routine, (void *)&philo[i]))
+		if (pthread_create(&(philo[i].thread_id), NULL, do_routine, (void *)&philo[i]) != 0)
 			return (write(2, "Error creating thread\n", 23), 1);
 		i++;
 	}
@@ -100,5 +129,6 @@ int	create_philos(t_table *table)
 		printf(G "philo thread %d joined\n" RST, philo[i].id);
 		i++;
 	}
+	pthread_join(monitor_t, NULL);
 	return (0);
 }

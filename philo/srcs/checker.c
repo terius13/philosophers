@@ -22,12 +22,6 @@
 // 250 — The time it takes a philosopher to sleep (more than 0)
 // 7 — Number of times all the philosophers need to eat before terminating the program (optional)
 
-void	error_exit(char *str)
-{
-	printf("%s\n", str);
-	exit(1);
-}
-
 int	ft_argisdigit(char *arg)
 {
 	int	i;

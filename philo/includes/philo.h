@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:23:37 by ting              #+#    #+#             */
-/*   Updated: 2024/04/29 19:22:23 by ting             ###   ########.fr       */
+/*   Updated: 2024/04/30 21:51:35 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,11 @@ typedef struct	s_philo
 	pthread_t	thread_id;
 	int	id;
 	int	meal_count;
+	int	finish_eating;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t *l_fork; //this is for l_fork[i]
 	pthread_mutex_t	eat_lock;
+	pthread_mutex_t meal_lock;
 	struct s_table	*table;
 }				t_philo;
 
@@ -47,11 +49,14 @@ typedef struct	s_table
 	long	time_to_eat;
 	long	time_to_sleep;
 	long	num_of_meals;
+	int		philos_done_eating;
 	long	start_time;
-	bool	end_simulation;
+	int	end_simulation; //1 or 0, 1 if dies, 0 if not
 	t_philo	*philos;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	message_lock;
+	pthread_mutex_t dead_lock;
+	pthread_mutex_t	meal_lock;
 }				t_table;
 
 //init.c
@@ -72,6 +77,10 @@ void	free_all(t_table *table);
 
 //philo.c
 void	*do_routine(void *philo_pointer);
-int	create_philos(t_table *table);
+int	create_philos_and_join(t_table *table);
+
+//monitor.c
+int   philos_all_ate(t_table *table);
+void    *monitor(void *table_ptr);
 
 #endif

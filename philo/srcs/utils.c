@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:35:56 by ting              #+#    #+#             */
-/*   Updated: 2024/04/29 19:22:25 by ting             ###   ########.fr       */
+/*   Updated: 2024/04/30 20:14:33 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void    free_all(t_table *table)
         i--;
     }
     pthread_mutex_destroy(&table->message_lock);
+    pthread_mutex_destroy(&table->dead_lock);
+    pthread_mutex_destroy(&table->meal_lock);
     free(table->philos);
     free(table->forks);
 }
