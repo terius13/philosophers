@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:23:37 by ting              #+#    #+#             */
-/*   Updated: 2024/05/01 17:21:41 by ting             ###   ########.fr       */
+/*   Updated: 2024/05/01 21:45:22 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,13 @@ void	free_all(t_table *table);
 //philo.c
 void	*do_routine(void *philo_pointer);
 int	create_philos_and_join(t_table *table);
+
+//actions.c
+void	message(t_philo *philo, int type);
+void	thinking(t_philo *philo);
+void	sleeping(t_philo *philo);
+void    take_forks(t_philo *philo);
+void	eating(t_philo *philo);
 
 //monitor.c
 int   philos_all_ate(t_table *table);
