@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:35:56 by ting              #+#    #+#             */
-/*   Updated: 2024/04/30 20:14:33 by ting             ###   ########.fr       */
+/*   Updated: 2024/05/01 18:52:33 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void    free_all(t_table *table)
     while (i >= 0)
     {
         pthread_mutex_destroy(&table->forks[i]);
-        pthread_mutex_destroy(&table->philos[i].eat_lock);
         i--;
     }
     pthread_mutex_destroy(&table->message_lock);

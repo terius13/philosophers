@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 18:45:25 by ting              #+#    #+#             */
-/*   Updated: 2024/04/30 22:05:18 by ting             ###   ########.fr       */
+/*   Updated: 2024/05/01 19:05:03 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,23 @@ int   philos_all_ate(t_table *table)
         return (0);
     while (i < table->num_of_philos)
     {
-        pthread_mutex_lock(&philo[i].meal_lock);
-        if (philo[i].meal_count == table->num_of_meals && philo[i].finish_eating != 1)
+        pthread_mutex_lock(&table->meal_lock);
+    
+        if (philo[i].meal_count >= table->num_of_meals && philo[i].finish_eating != 1)
         {
             philo[i].finish_eating = 1;
             table->philos_done_eating++;
         }
-        pthread_mutex_unlock(&philo[i].meal_lock);
+        pthread_mutex_unlock(&table->meal_lock);
         i++;
     }
-    pthread_mutex_lock(&table->dead_lock);
     if (table->philos_done_eating == table->num_of_philos)
     {
+        pthread_mutex_lock(&table->dead_lock);
         table->end_simulation = 1;
         pthread_mutex_unlock(&table->dead_lock);
         return (1);
     }
-    pthread_mutex_unlock(&table->dead_lock);
     return (0);
 }
 

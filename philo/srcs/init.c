@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 20:45:43 by ting              #+#    #+#             */
-/*   Updated: 2024/04/30 21:51:58 by ting             ###   ########.fr       */
+/*   Updated: 2024/05/01 17:22:06 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,9 @@ void	init_philo(t_table *table)
 		philo[i].id = i + 1;
 		philo[i].r_fork = &table->forks[philo[i].id - 1];
 		philo[i].l_fork = &table->forks[philo[i].id  % table->num_of_philos];
-		pthread_mutex_init(&philo[i].eat_lock, NULL);
-		pthread_mutex_init(&philo[i].meal_lock, NULL);
+		philo[i].meal_lock = &table->meal_lock;
+		philo[i].dead_lock = &table->dead_lock;
+		//pthread_mutex_init(&philo[i].meal_lock, NULL);
 		i++;
 	}
 }

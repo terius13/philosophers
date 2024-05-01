@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:23:37 by ting              #+#    #+#             */
-/*   Updated: 2024/04/30 21:51:35 by ting             ###   ########.fr       */
+/*   Updated: 2024/05/01 17:21:41 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ typedef struct	s_philo
 	int	finish_eating;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t *l_fork; //this is for l_fork[i]
-	pthread_mutex_t	eat_lock;
-	pthread_mutex_t meal_lock;
+	pthread_mutex_t *meal_lock;
+	pthread_mutex_t *dead_lock;
 	struct s_table	*table;
 }				t_philo;
 
