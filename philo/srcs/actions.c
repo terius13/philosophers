@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 21:39:12 by ting              #+#    #+#             */
-/*   Updated: 2024/05/01 21:47:02 by ting             ###   ########.fr       */
+/*   Updated: 2024/05/02 17:45:47 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	message(t_philo *philo, int type)
 		printf(R "%ld %i dropped the r_fork\n" RST, get_time() - philo->table->start_time, philo->id);
 	else if (type == 7)
 		printf(R "%ld %i dropped the l_fork\n" RST, get_time() - philo->table->start_time, philo->id);
+	else if (type == 8)
+		printf(R "%ld %i died\n" RST, get_time() - philo->table->start_time, philo->id);
 	pthread_mutex_unlock(&philo->table->message_lock);
 }
 
@@ -46,7 +48,8 @@ void	sleeping(t_philo *philo)
 	ft_usleep(philo->table->time_to_sleep);
 }
 
-//pick up forks
+//Even philo picks up left fork first
+//Odd philo picks up right fork first
 void    take_forks(t_philo *philo)
 {
     if (philo->id % 2 == 0)
@@ -71,6 +74,7 @@ void	eating(t_philo *philo)
 	message(philo, 1);
 	pthread_mutex_lock(philo->meal_lock);
 	philo->meal_count++;
+	philo->last_meal = get_time();
 	pthread_mutex_unlock(philo->meal_lock);
 	ft_usleep(philo->table->time_to_eat);
 	if (philo->id % 2 == 0)

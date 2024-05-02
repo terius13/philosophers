@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 20:45:43 by ting              #+#    #+#             */
-/*   Updated: 2024/05/01 17:22:06 by ting             ###   ########.fr       */
+/*   Updated: 2024/05/02 15:04:59 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	init_input(t_table *table, int argc, char **argv)
 	table->philos_done_eating = 0;
 	if (argv[5])
 		table->num_of_meals = ft_atol(argv[5]);
-//	else
-//		table->num_of_meals = -1;
+	else
+		table->num_of_meals = -1;
 	table->philos = (t_philo *)malloc(sizeof(t_philo) * table->num_of_philos);
 	pthread_mutex_init(&table->message_lock, NULL);
 	pthread_mutex_init(&table->dead_lock, NULL);
@@ -64,7 +64,6 @@ void	init_philo(t_table *table)
 		philo[i].l_fork = &table->forks[philo[i].id  % table->num_of_philos];
 		philo[i].meal_lock = &table->meal_lock;
 		philo[i].dead_lock = &table->dead_lock;
-		//pthread_mutex_init(&philo[i].meal_lock, NULL);
 		i++;
 	}
 }

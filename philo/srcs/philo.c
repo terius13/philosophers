@@ -6,15 +6,15 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:23:51 by ting              #+#    #+#             */
-/*   Updated: 2024/05/01 21:54:20 by ting             ###   ########.fr       */
+/*   Updated: 2024/05/02 14:37:13 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
 //Each thread is a philo
-//I need to create the number of thread base on the input that specifies the num of philo.
 
+//This function is needed to mutex_lock when checking end_simulations, as its reading it. 
 int		check_end_simulation(t_philo *philo)
 {
 	pthread_mutex_lock(philo->dead_lock);
@@ -30,8 +30,8 @@ void	*do_routine(void *philo_pointer)
 {
 	t_philo	*philo;
 
-	philo = (t_philo *) philo_pointer;
-	printf("philo thread %i is running\n", philo->id);
+	philo = (t_philo *)philo_pointer;
+	printf("philo thread %i is running\n", philo->id);//rm later, will cause helgrind error
 	/*
 	if (philo->id % 2 == 0)
 		{
@@ -72,7 +72,7 @@ int	create_philos_and_join(t_table *table)
 	while (i < table->num_of_philos)
 	{
 		pthread_join(philo[i].thread_id, NULL);
-		printf(G "philo thread %d joined\n" RST, philo[i].id);
+		printf(G "philo thread %d joined\n" RST, philo[i].id);//rm later, will cause helgrind error
 		i++;
 	}
 	pthread_join(monitor_t, NULL);

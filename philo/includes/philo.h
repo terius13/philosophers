@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:23:37 by ting              #+#    #+#             */
-/*   Updated: 2024/05/01 21:45:22 by ting             ###   ########.fr       */
+/*   Updated: 2024/05/02 17:49:20 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,14 @@ typedef struct	s_philo
 {
 	pthread_t	thread_id;
 	int	id;
-	int	meal_count;
-	int	finish_eating;
-	pthread_mutex_t	*r_fork;
+	int	meal_count;	//num of meals it has eaten
+	long	last_meal; //the timestamp of its last meal eaten
+	int	finish_eating; //set to 1 when meal_count reaches num_of_meals, init to 0
+	pthread_mutex_t	*r_fork; //pointer to a fork in the array of fork in table
 	pthread_mutex_t *l_fork; //this is for l_fork[i]
-	pthread_mutex_t *meal_lock;
-	pthread_mutex_t *dead_lock;
-	struct s_table	*table;
+	pthread_mutex_t *meal_lock; //pointer to meal_lock in table
+	pthread_mutex_t *dead_lock; //pointer to dead_lock in table
+	struct s_table	*table; //pointer to table
 }				t_philo;
 
 typedef struct	s_table
@@ -88,6 +89,7 @@ void	eating(t_philo *philo);
 
 //monitor.c
 int   philos_all_ate(t_table *table);
+int   philos_are_dead(t_table *table);
 void    *monitor(void *table_ptr);
 
 #endif
