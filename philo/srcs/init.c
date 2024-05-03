@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 20:45:43 by ting              #+#    #+#             */
-/*   Updated: 2024/05/02 15:04:59 by ting             ###   ########.fr       */
+/*   Updated: 2024/05/03 12:26:31 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	init_philo(t_table *table)
 		philo[i].id = i + 1;
 		philo[i].r_fork = &table->forks[philo[i].id - 1];
 		philo[i].l_fork = &table->forks[philo[i].id  % table->num_of_philos];
+		philo[i].last_meal = get_time();
 		philo[i].meal_lock = &table->meal_lock;
 		philo[i].dead_lock = &table->dead_lock;
 		i++;

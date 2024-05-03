@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 21:39:12 by ting              #+#    #+#             */
-/*   Updated: 2024/05/02 17:45:47 by ting             ###   ########.fr       */
+/*   Updated: 2024/05/03 16:16:42 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,12 @@ void	eating(t_philo *philo)
 {
 	take_forks(philo);
 	message(philo, 1);
-	pthread_mutex_lock(philo->meal_lock);
-	philo->meal_count++;
-	philo->last_meal = get_time();
-	pthread_mutex_unlock(philo->meal_lock);
 	ft_usleep(philo->table->time_to_eat);
+	pthread_mutex_lock(philo->meal_lock);
+	philo->last_meal = get_time();
+	philo->meal_count++;
+	pthread_mutex_unlock(philo->meal_lock);
+
 	if (philo->id % 2 == 0)
 	{
 		message(philo, 6);

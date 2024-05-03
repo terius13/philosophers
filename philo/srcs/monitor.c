@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 18:45:25 by ting              #+#    #+#             */
-/*   Updated: 2024/05/02 17:52:42 by ting             ###   ########.fr       */
+/*   Updated: 2024/05/03 12:32:55 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,20 @@ int   philos_are_dead(t_table *table)
         {
             dead_flag = 1;
             message(&philo[i], 8);
-            pthread_mutex_unlock(&table->meal_lock);
-            break;
+        //    pthread_mutex_unlock(&table->meal_lock);
+        //    break;
         }
         pthread_mutex_unlock(&table->meal_lock);
+        if (dead_flag == 1)
+        {
+            pthread_mutex_lock(&table->dead_lock);
+            table->end_simulation = 1;
+            pthread_mutex_unlock(&table->dead_lock);
+            return (1);
+        }
         i++;
     }
-    if (dead_flag == 1)
-    {
-        pthread_mutex_lock(&table->dead_lock);
-        table->end_simulation = 1;
-        pthread_mutex_unlock(&table->dead_lock);
-        return (1);
-    }
+    
     return (0);
 }
 //not working correctly

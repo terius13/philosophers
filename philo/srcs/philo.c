@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:23:51 by ting              #+#    #+#             */
-/*   Updated: 2024/05/02 14:37:13 by ting             ###   ########.fr       */
+/*   Updated: 2024/05/03 16:42:04 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,29 @@ int		check_end_simulation(t_philo *philo)
 	return (0);
 }
 
+int	check_end_simul_2(t_philo *philo)
+{
+	pthread_mutex_lock(philo->meal_lock);
+	if (philo->meal_count < philo->table->num_of_meals || philo->table->num_of_meals == -1)
+		return (pthread_mutex_unlock(philo->meal_lock), 0);
+	pthread_mutex_unlock(philo->meal_lock);
+	return (1);
+}
+
 void	*do_routine(void *philo_pointer)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)philo_pointer;
 	printf("philo thread %i is running\n", philo->id);//rm later, will cause helgrind error
-	/*
+	
 	if (philo->id % 2 == 0)
 		{
 			ft_usleep(1);
 		}
-	*/
-	while (check_end_simulation(philo) == 0 &&
-				(philo->meal_count < philo->table->num_of_meals || philo->table->num_of_meals == -1)) 
+	
+//reading meal_count might give me data race, can add into check_end_simu
+	while (check_end_simulation(philo) == 0 && check_end_simul_2(philo) == 0) 
 	{
 		thinking(philo);
 		eating(philo);
