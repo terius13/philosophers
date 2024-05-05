@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:23:37 by ting              #+#    #+#             */
-/*   Updated: 2024/05/02 17:49:20 by ting             ###   ########.fr       */
+/*   Updated: 2024/05/05 15:05:06 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct	s_philo
 	int	finish_eating; //set to 1 when meal_count reaches num_of_meals, init to 0
 	pthread_mutex_t	*r_fork; //pointer to a fork in the array of fork in table
 	pthread_mutex_t *l_fork; //this is for l_fork[i]
+	pthread_mutex_t *message_lock;
 	pthread_mutex_t *meal_lock; //pointer to meal_lock in table
 	pthread_mutex_t *dead_lock; //pointer to dead_lock in table
 	struct s_table	*table; //pointer to table

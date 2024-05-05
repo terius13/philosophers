@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:23:51 by ting              #+#    #+#             */
-/*   Updated: 2024/05/03 16:42:04 by ting             ###   ########.fr       */
+/*   Updated: 2024/05/05 22:28:36 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	*do_routine(void *philo_pointer)
 	t_philo	*philo;
 
 	philo = (t_philo *)philo_pointer;
-	printf("philo thread %i is running\n", philo->id);//rm later, will cause helgrind error
+//	printf("philo thread %i is running\n", philo->id);//rm later, will cause helgrind error
 	
 	if (philo->id % 2 == 0)
 		{
@@ -50,9 +50,9 @@ void	*do_routine(void *philo_pointer)
 //reading meal_count might give me data race, can add into check_end_simu
 	while (check_end_simulation(philo) == 0 && check_end_simul_2(philo) == 0) 
 	{
-		thinking(philo);
 		eating(philo);
 		sleeping(philo);
+		thinking(philo);
 	}
 	return (NULL);
 }
@@ -71,8 +71,6 @@ int	create_philos_and_join(t_table *table)
 		return (write(2, "Error creating thread\n", 22), 1);
 	while (i < table->num_of_philos)
 	{
-		philo[i].id = i + 1;
-		philo[i].table = table;
 		if (pthread_create(&(philo[i].thread_id), NULL, do_routine, (void *)&philo[i]) != 0)
 			return (write(2, "Error creating thread\n", 23), 1);
 		i++;
@@ -81,7 +79,7 @@ int	create_philos_and_join(t_table *table)
 	while (i < table->num_of_philos)
 	{
 		pthread_join(philo[i].thread_id, NULL);
-		printf(G "philo thread %d joined\n" RST, philo[i].id);//rm later, will cause helgrind error
+	//	printf(G "philo thread %d joined\n" RST, philo[i].id);//rm later, will cause helgrind error
 		i++;
 	}
 	pthread_join(monitor_t, NULL);

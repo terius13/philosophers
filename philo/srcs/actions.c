@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 21:39:12 by ting              #+#    #+#             */
-/*   Updated: 2024/05/03 16:16:42 by ting             ###   ########.fr       */
+/*   Updated: 2024/05/05 19:50:40 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,13 @@ void	message(t_philo *philo, int type)
 	pthread_mutex_unlock(&philo->table->message_lock);
 }
 
+//When a philo is done sleeping, it will think for 1ms
+//This helps stagger philosopher's eating routines to avoid forks
+//being monopolized by one philosopher to the detriment of others.
 void	thinking(t_philo *philo)
 {
 	message(philo, 2);
+	ft_usleep(1);
 }
 
 void	sleeping(t_philo *philo)
@@ -54,18 +58,24 @@ void    take_forks(t_philo *philo)
 {
     if (philo->id % 2 == 0)
 	{
-		pthread_mutex_lock(philo->l_fork);
-		message(philo, 5);
 		pthread_mutex_lock(philo->r_fork);
 		message(philo, 4);
+		pthread_mutex_lock(philo->l_fork);
+		message(philo, 5);
 	}
 	else
 	{
-		pthread_mutex_lock(philo->r_fork);
-		message(philo, 4);
 		pthread_mutex_lock(philo->l_fork);
 		message(philo, 5);
+		pthread_mutex_lock(philo->r_fork);
+		message(philo, 4);
 	}
+	/*
+	pthread_mutex_lock(philo->r_fork);
+	message(philo, 4);
+	pthread_mutex_lock(philo->l_fork);
+	message(philo, 5);
+	*/
 }
 
 void	eating(t_philo *philo)
@@ -80,16 +90,16 @@ void	eating(t_philo *philo)
 
 	if (philo->id % 2 == 0)
 	{
-		message(philo, 6);
-		pthread_mutex_unlock(philo->r_fork);
 		message(philo, 7);
 		pthread_mutex_unlock(philo->l_fork);
+		message(philo, 6);
+		pthread_mutex_unlock(philo->r_fork);
 	}
 	else
 	{
-		message(philo, 7);
-		pthread_mutex_unlock(philo->l_fork);
 		message(philo, 6);
 		pthread_mutex_unlock(philo->r_fork);
+		message(philo, 7);
+		pthread_mutex_unlock(philo->l_fork);
 	}
 }

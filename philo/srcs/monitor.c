@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 18:45:25 by ting              #+#    #+#             */
-/*   Updated: 2024/05/03 12:32:55 by ting             ###   ########.fr       */
+/*   Updated: 2024/05/05 19:26:13 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,10 @@ int   philos_are_dead(t_table *table)
     while (i < table->num_of_philos)
     {
         pthread_mutex_lock(&table->meal_lock);
-        if ((get_time() - philo[i].last_meal) > table->time_to_die)
+        if ((get_time() - philo[i].last_meal) > table->time_to_die && philo[i].meal_count != table->num_of_meals)
         {
             dead_flag = 1;
-            message(&philo[i], 8);
-        //    pthread_mutex_unlock(&table->meal_lock);
-        //    break;
+        //    message(&philo[i], 8);
         }
         pthread_mutex_unlock(&table->meal_lock);
         if (dead_flag == 1)
@@ -38,6 +36,7 @@ int   philos_are_dead(t_table *table)
             pthread_mutex_lock(&table->dead_lock);
             table->end_simulation = 1;
             pthread_mutex_unlock(&table->dead_lock);
+            message(&philo[i], 8);
             return (1);
         }
         i++;
@@ -45,8 +44,8 @@ int   philos_are_dead(t_table *table)
     
     return (0);
 }
-//not working correctly
-
+//need a condition if philo is done eating he drops out and not continue eating
+//can use finish_eating as a condition but need to make it global in struct
 int   philos_all_ate(t_table *table)
 {
     int i;
@@ -80,11 +79,13 @@ void    *monitor(void *table_ptr)
     t_table *table;
     
     table = (t_table *)table_ptr;
-  if (table->num_of_meals > 0)
+    if (table->num_of_meals > 0)
     {
         while (1)
             if (philos_are_dead(table) == 1 || philos_all_ate(table) == 1)
+            {
                 break;
+            }
     }
     else
     {

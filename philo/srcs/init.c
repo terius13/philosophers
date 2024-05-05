@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 20:45:43 by ting              #+#    #+#             */
-/*   Updated: 2024/05/03 12:26:31 by ting             ###   ########.fr       */
+/*   Updated: 2024/05/05 22:25:46 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,15 @@ void	init_philo(t_table *table)
 	philo = table->philos;
 	while (i < table->num_of_philos)
 	{
-		philo[i].meal_count = 0;
+		philo[i].id = i + 1;
+		philo[i].table = table;
+		philo[i].meal_count = 0; 
 		philo[i].finish_eating = 0;
 		philo[i].id = i + 1;
 		philo[i].r_fork = &table->forks[philo[i].id - 1];
 		philo[i].l_fork = &table->forks[philo[i].id  % table->num_of_philos];
 		philo[i].last_meal = get_time();
+		// philo[i].message_lock = &table->meal_lock;
 		philo[i].meal_lock = &table->meal_lock;
 		philo[i].dead_lock = &table->dead_lock;
 		i++;
