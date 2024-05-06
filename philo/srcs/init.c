@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 20:45:43 by ting              #+#    #+#             */
-/*   Updated: 2024/05/05 22:25:46 by ting             ###   ########.fr       */
+/*   Updated: 2024/05/06 17:36:07 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	init_philo(t_table *table)
 	philo = table->philos;
 	while (i < table->num_of_philos)
 	{
-		philo[i].id = i + 1;
+	//	philo[i].id = i + 1;
 		philo[i].table = table;
 		philo[i].meal_count = 0; 
 		philo[i].finish_eating = 0;

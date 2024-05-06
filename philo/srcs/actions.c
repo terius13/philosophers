@@ -6,17 +6,23 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 21:39:12 by ting              #+#    #+#             */
-/*   Updated: 2024/05/05 19:50:40 by ting             ###   ########.fr       */
+/*   Updated: 2024/05/06 19:35:35 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-//type 1 is for eating, type 2 is for thinking, type 3 is for sleeping
-//type 4 is picked up r_fork, type 5 is picked up l_fork
-//type 6 is dropped r_fork, type 7 is dropped l_fork
+//All the actions function check end_simu first to prevent other thread from continueing,
+//in the case where a philo died, else it will print "philo died",
+//but still continue to print other threads's action e.g eating,sleeping,take forks.
+
+//Type 1 is for eating, Type 2 is for thinking, Type 3 is for sleeping
+//Type 4 is picked up r_fork, Type 5 is picked up l_fork
+//Type 6 is dropped r_fork, Type 7 is dropped l_fork
 void	message(t_philo *philo, int type)
 {
+	if (check_end_simulation(philo) == 1)
+		return ;
 	pthread_mutex_lock(&philo->table->message_lock);
 	if (type == 1)
 		printf(Y "%ld %i is eating\n" RST, get_time() - philo->table->start_time, philo->id);
@@ -25,13 +31,7 @@ void	message(t_philo *philo, int type)
 	else if (type == 3)
 		printf(M "%ld %i is sleeping\n" RST, get_time() - philo->table->start_time, philo->id);
 	else if (type == 4)
-		printf(B "%ld %i picked up the r_fork\n" RST, get_time() - philo->table->start_time, philo->id);
-	else if (type == 5)
-		printf(B "%ld %i picked up the l_fork\n" RST, get_time() - philo->table->start_time, philo->id);
-	else if (type == 6)
-		printf(R "%ld %i dropped the r_fork\n" RST, get_time() - philo->table->start_time, philo->id);
-	else if (type == 7)
-		printf(R "%ld %i dropped the l_fork\n" RST, get_time() - philo->table->start_time, philo->id);
+		printf(B "%ld %i has taken a fork\n" RST, get_time() - philo->table->start_time, philo->id);
 	else if (type == 8)
 		printf(R "%ld %i died\n" RST, get_time() - philo->table->start_time, philo->id);
 	pthread_mutex_unlock(&philo->table->message_lock);
@@ -42,44 +42,47 @@ void	message(t_philo *philo, int type)
 //being monopolized by one philosopher to the detriment of others.
 void	thinking(t_philo *philo)
 {
+	if (check_end_simulation(philo) == 1)
+		return ;
 	message(philo, 2);
 	ft_usleep(1);
 }
 
 void	sleeping(t_philo *philo)
 {
+	if (check_end_simulation(philo) == 1)
+		return ;
 	message(philo, 3);
 	ft_usleep(philo->table->time_to_sleep);
 }
 
-//Even philo picks up left fork first
-//Odd philo picks up right fork first
+//Even philo picks up right fork first
+//Odd philo picks up left fork first
+//To prevent data races
 void    take_forks(t_philo *philo)
 {
+	if (check_end_simulation(philo) == 1)
+		return ;
     if (philo->id % 2 == 0)
 	{
 		pthread_mutex_lock(philo->r_fork);
 		message(philo, 4);
 		pthread_mutex_lock(philo->l_fork);
-		message(philo, 5);
+		message(philo, 4);
 	}
 	else
 	{
 		pthread_mutex_lock(philo->l_fork);
-		message(philo, 5);
+		message(philo, 4);
 		pthread_mutex_lock(philo->r_fork);
 		message(philo, 4);
 	}
-	/*
-	pthread_mutex_lock(philo->r_fork);
-	message(philo, 4);
-	pthread_mutex_lock(philo->l_fork);
-	message(philo, 5);
-	*/
 }
 
 void	eating(t_philo *philo)
 {
+	if (check_end_simulation(philo) == 1)
+		return ;
 	take_forks(philo);
 	message(philo, 1);
 	ft_usleep(philo->table->time_to_eat);
@@ -87,19 +90,15 @@ void	eating(t_philo *philo)
 	philo->last_meal = get_time();
 	philo->meal_count++;
 	pthread_mutex_unlock(philo->meal_lock);
-
 	if (philo->id % 2 == 0)
 	{
-		message(philo, 7);
 		pthread_mutex_unlock(philo->l_fork);
-		message(philo, 6);
 		pthread_mutex_unlock(philo->r_fork);
 	}
 	else
 	{
-		message(philo, 6);
 		pthread_mutex_unlock(philo->r_fork);
-		message(philo, 7);
 		pthread_mutex_unlock(philo->l_fork);
 	}
 }
+//The fork mutexes are unlocked in the opp of how it was locked to prevent data race

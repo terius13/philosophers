@@ -6,7 +6,7 @@
 /*   By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:23:37 by ting              #+#    #+#             */
-/*   Updated: 2024/05/05 15:05:06 by ting             ###   ########.fr       */
+/*   Updated: 2024/05/06 18:00:08 by ting             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	ft_usleep(long ms);
 void	free_all(t_table *table);
 
 //philo.c
+int		check_end_simulation(t_philo *philo);
 void	*do_routine(void *philo_pointer);
 int	create_philos_and_join(t_table *table);
 
