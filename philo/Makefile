@@ -6,7 +6,7 @@
 #    By: ting <ting@student.42singapore.sg>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/17 14:22:30 by ting              #+#    #+#              #
-#    Updated: 2024/05/06 19:19:35 by ting             ###   ########.fr        #
+#    Updated: 2024/05/07 21:27:20 by ting             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,20 +14,22 @@ NAME = philo
 
 FLAGS = -Wall -Werror -Wextra -g -lpthread #-fsanitize=thread #-fsanitize=address  
 
-SRCS = srcs/philo.c srcs/checker.c \
-		srcs/utils.c srcs/main.c \
-		srcs/init.c srcs/monitor.c \
-		srcs/actions.c
+SRCS_PATH = srcs/
 
-$(NAME):
-		cc $(FLAGS) $(SRCS) -o $(NAME)
+SRCS = philo.c checker.c \
+		utils.c main.c \
+		init.c monitor.c \
+		actions.c
+
+OBJS = $(addprefix $(SRCS_PATH), $(SRCS:.c=.o))
+
+$(NAME): $(OBJS)
+		cc $(FLAGS) $(OBJS) -o $(NAME)
 
 all: $(NAME)
 
-debug: 
-	cc $(FLAGS) -fsanitize=thread $(SRCS) -o $(NAME)_debug
 clean:
-		rm -rf $(NAME)
+		rm -rf $(OBJS)
 
 fclean: clean
 		rm -rf $(NAME)
